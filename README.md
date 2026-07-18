@@ -8,12 +8,14 @@ Landing page institucional da **Plataforma Fitness**, academia localizada em Ipu
 
 ## 📁 Estrutura do projeto
 
+```
 .
 ├── index.html          # Estrutura e conteúdo da página
 ├── styles.css          # Estilos, tema visual e animações
 ├── script.js           # Interações, scroll tracking e efeitos
 ├── rosca-direta.jpg     # Imagem de fundo da seção "Modalidades"
 └── README.md           # Este arquivo
+```
 
 ⚠️ **Importante:** o arquivo `rosca-direta.jpg` precisa estar na mesma pasta dos demais arquivos — ele é referenciado via caminho relativo no `styles.css` (seção de fundo animado de Modalidades).
 
@@ -64,6 +66,27 @@ Para publicar, envie os arquivos pro seu servidor/hospedagem (Netlify, Vercel, G
 | Endereço / mapa | Seção `#local` em `index.html` |
 | Cores do tema | Variáveis no topo de `styles.css` (`:root`) |
 | Imagem de fundo de Modalidades | Trocar o arquivo `rosca-direta.jpg` (mesmo nome) |
+
+---
+
+## ☁️ Deploy na Vercel
+
+Site 100% estático — não precisa de build nem servidor próprio.
+
+**Via painel (recomendado):**
+1. Suba os 4 arquivos deste projeto pra um repositório no GitHub.
+2. Em [vercel.com](https://vercel.com) → **Add New → Project** → selecione o repositório.
+3. Framework Preset: **Other**. Build Command e Output Directory: deixar em branco (ou `.`).
+4. **Deploy** — a URL fica pronta em segundos (`seu-projeto.vercel.app`).
+5. Domínio próprio: **Settings → Domains** → adicionar e apontar o DNS.
+
+**Via CLI:**
+```bash
+npm i -g vercel
+vercel
+```
+
+Qualquer novo `git push` na branch conectada gera um deploy automático.
 
 ---
 
