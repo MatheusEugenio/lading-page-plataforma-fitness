@@ -230,11 +230,6 @@ img {
   background: var(--amber);
 }
 
-.btn-ghost {
-  border-color: var(--line);
-  color: var(--paper);
-}
-
 .btn-ghost:hover {
   border-color: var(--yellow);
   color: var(--yellow);
@@ -740,17 +735,6 @@ section {
   animation: fadeIn .31s ease;
 }
 
-.modalidades-content{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:70px;
-}
-
-.modalidades-info{
-    flex:1;
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -823,9 +807,6 @@ section {
     border-left: none;
     border-bottom: 3px solid var(--line);
     white-space: nowrap;
-  }
-  .modalidade-image {
-    justify-content: center; /* Centraliza a imagem no celular */
   }
 }
 
