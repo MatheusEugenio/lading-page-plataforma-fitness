@@ -13,13 +13,13 @@ Landing page institucional da **Plataforma Fitness**, academia localizada em Ipu
 ├── index.html          # Estrutura e conteúdo da página
 ├── styles.css          # Estilos, tema visual e animações
 ├── script.js           # Interações, scroll tracking e efeitos
-├── rosca-direta.jpg     # Imagem de fundo da seção "Modalidades"
+├── images/             # Imagens de fundo
+│      │
+│      ├── halters-simples.jpg
+│      ├── imagem-hack-amplo.png
+│      └── rosca-direta.jpg
+│
 └── README.md           # Este arquivo
-```
-
-⚠️ **Importante:** o arquivo `rosca-direta.jpg` precisa estar na mesma pasta dos demais arquivos — ele é referenciado via caminho relativo no `styles.css` (seção de fundo animado de Modalidades).
-
----
 
 ## 🚀 Como rodar localmente
 
