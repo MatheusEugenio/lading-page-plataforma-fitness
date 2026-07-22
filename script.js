@@ -91,7 +91,6 @@
     revealElements.forEach(el => observer.observe(el));
   }
 
-
   // ============================================
   // MODALIDADES TABS
   // ============================================
@@ -108,10 +107,14 @@
         tabs.forEach(t => t.classList.remove('active'));
         this.classList.add('active');
 
-        // Update content
+        // Update content with transition
         items.forEach(item => {
           if (item.getAttribute('data-mod') === modId) {
             item.classList.add('active');
+            // Re-trigger animation
+            item.style.animation = 'none';
+            item.offsetHeight; // trigger reflow
+            item.style.animation = '';
           } else {
             item.classList.remove('active');
           }
@@ -119,7 +122,6 @@
 
       });
     });
-
 
   }
 
@@ -145,8 +147,6 @@
 
   // ============================================
   // MODALIDADES BACKGROUND PARALLAX
-  // (o fundo se desloca num ritmo diferente do
-  //  scroll normal, criando sensação de profundidade)
   // ============================================
   function initModBackgroundParallax() {
     const modSection = document.getElementById('modalidades');
@@ -155,10 +155,9 @@
     function updateParallax() {
       const rect = modSection.getBoundingClientRect();
       const vh = window.innerHeight;
-      // progresso: -1 (seção acima) .. 0 (centralizada) .. 1 (seção abaixo)
       const center = rect.top + rect.height / 2;
       const progress = (center - vh / 2) / (vh / 2 + rect.height / 2);
-      const shift = progress * 60; // deslocamento máximo em px
+      const shift = progress * 60;
       modSection.style.setProperty('--mod-parallax-y', shift.toFixed(1) + 'px');
     }
 
@@ -205,40 +204,24 @@
   }
 
   // ============================================
-  // ANIMATED COUNTERS (For stats, if needed)
-  // ============================================
-  function animateValue(element, start, end, duration) {
-    let startTimestamp = null;
-    
-    const step = (timestamp) => {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      const value = Math.floor(progress * (end - start) + start);
-      element.textContent = value;
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      }
-    };
-    
-    requestAnimationFrame(step);
-  }
-
-  // ============================================
-  // HERO TEXT STAGGER ANIMATION
+  // HERO TEXT STAGGER ANIMATION (Enhanced)
   // ============================================
   function initHeroAnimations() {
-    const eyebrow = document.querySelector('.eyebrow');
-    const h1 = document.querySelector('.hero h1');
-    const lede = document.querySelector('.hero p.lede');
-    const actions = document.querySelector('.hero-actions');
-    const meta = document.querySelector('.hero-meta');
+    const heroInner = document.querySelector('.hero-inner');
+    if (!heroInner) return;
 
-    // Stagger animations are already in CSS, but we can enhance here if needed
-    // This is just a placeholder for future enhancements
+    // Adicionar classe de entrada para animação de fade-up no hero
+    heroInner.style.opacity = '1';
+
+    // Efeito de revelação gradual dos elementos do hero com delay escalonado
+    const heroElements = heroInner.querySelectorAll('.eyebrow, h1, .lede, .hero-actions, .hero-meta');
+    heroElements.forEach((el, i) => {
+      el.style.animationDelay = (0.1 + i * 0.12) + 's';
+    });
   }
 
   // ============================================
-  // BUTTON RIPPLE EFFECT
+  // BUTTON RIPPLE EFFECT (Corrigido e Completo)
   // ============================================
   function initButtonRipple() {
     const buttons = document.querySelectorAll('.btn');
@@ -249,18 +232,23 @@
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         
+        // Remover ripple anterior se existir
+        const existing = this.querySelector('.ripple');
+        if (existing) existing.remove();
+        
         const ripple = document.createElement('span');
-        ripple.style.position = 'absolute';
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
+        ripple.className = 'ripple';
+        ripple.style.left = (x - 10) + 'px';
+        ripple.style.top = (y - 10) + 'px';
         ripple.style.width = '20px';
         ripple.style.height = '20px';
-        ripple.style.backgroundColor = 'rgba(255,255,255,0.5)';
-        ripple.style.borderRadius = '50%';
-        ripple.style.pointerEvents = 'none';
-        ripple.style.animation = 'ripple 0.6s ease-out';
         
-        // Note: Add CSS animation for ripple if desired
+        this.appendChild(ripple);
+        
+        // Remover após animação
+        ripple.addEventListener('animationend', () => {
+          ripple.remove();
+        });
       });
     });
   }
@@ -308,6 +296,199 @@
       p.style.setProperty('--drift', drift);
       layer.appendChild(p);
     }
+  }
+
+  // ============================================
+  // TILT 3D EFFECT ON CARDS (mouse tracking)
+  // ============================================
+  function initCardTilt() {
+    if (window.innerWidth < 768) return; // Desativar em mobile
+
+    const cards = document.querySelectorAll('.diff-card, .plan-card');
+    if (!cards.length) return;
+
+    cards.forEach(card => {
+      card.classList.add('tilt-active');
+
+      card.addEventListener('mouseenter', () => {
+        card.style.transition = 'transform 0.1s ease';
+      });
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = ((y - centerY) / centerY) * -6; // máximo 6 graus
+        const rotateY = ((x - centerX) / centerX) * 6;
+        
+        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transition = 'transform 0.4s var(--ease-out)';
+        card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
+      });
+    });
+  }
+
+  // ============================================
+  // ROSCA-DIRETA 3D MOUSE TRACKING
+  // ============================================
+  function initRoscaDireta3D() {
+    if (window.innerWidth < 768) return; // Desativar em mobile
+
+    const modSection = document.getElementById('modalidades');
+    if (!modSection) return;
+
+    const pseudo = modSection; // O ::before é o elemento com a imagem
+
+    modSection.addEventListener('mousemove', (e) => {
+      const rect = modSection.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      
+      const rotateX = y * 5; // máximo 5 graus
+      const rotateY = x * -5;
+      
+      pseudo.style.setProperty('--rosca-rotate-x', rotateX.toFixed(2) + 'deg');
+      pseudo.style.setProperty('--rosca-rotate-y', rotateY.toFixed(2) + 'deg');
+      
+      // Aplicar via CSS custom property para o ::before
+      modSection.style.setProperty('--mouse-x', ((e.clientX - rect.left) / rect.width * 100) + '%');
+      modSection.style.setProperty('--mouse-y', ((e.clientY - rect.top) / rect.height * 100) + '%');
+    });
+
+    modSection.addEventListener('mouseleave', () => {
+      modSection.style.setProperty('--mouse-x', '50%');
+      modSection.style.setProperty('--mouse-y', '50%');
+    });
+  }
+
+  // ============================================
+  // MAGNETIC BUTTON EFFECT
+  // ============================================
+  function initMagneticButtons() {
+    if (window.innerWidth < 768) return;
+
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(btn => {
+      btn.classList.add('magnetic-hover');
+      
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        const strength = 0.3;
+        btn.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+      });
+
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+      });
+    });
+  }
+
+  // ============================================
+  // GYM SHOWCASE PARALLAX ON SCROLL
+  // ============================================
+  function initGymParallax() {
+    const gymImg = document.querySelector('.gym-img');
+    if (!gymImg) return;
+
+    window.addEventListener('scroll', () => {
+      requestAnimationFrame(() => {
+        const rect = gymImg.parentElement.getBoundingClientRect();
+        const vh = window.innerHeight;
+        
+        // Só animar quando visível
+        if (rect.top < vh && rect.bottom > 0) {
+          const progress = (vh - rect.top) / (vh + rect.height);
+          const shift = (progress - 0.5) * 30; // máximo 15px cada lado
+          gymImg.style.transform = `scale(1) translateY(${shift}px)`;
+        }
+      });
+    }, { passive: true });
+  }
+
+  // ============================================
+  // STAGGERED REVEAL FOR SECTION HEADINGS
+  // ============================================
+  function initStaggeredHeadings() {
+    const headings = document.querySelectorAll('.section-head h2');
+    if (!headings.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const h2 = entry.target;
+          const text = h2.textContent;
+          h2.innerHTML = '';
+          
+          // Split text into words
+          const words = text.split(' ');
+          words.forEach((word, i) => {
+            const span = document.createElement('span');
+            span.textContent = word + ' ';
+            span.style.display = 'inline-block';
+            span.style.opacity = '0';
+            span.style.transform = 'translateY(16px)';
+            span.style.transition = `opacity 0.4s var(--ease-out) ${i * 0.06}s, transform 0.4s var(--ease-out) ${i * 0.06}s`;
+            h2.appendChild(span);
+          });
+
+          // Trigger animation
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              h2.querySelectorAll('span').forEach(s => {
+                s.style.opacity = '1';
+                s.style.transform = 'translateY(0)';
+              });
+            });
+          });
+
+          observer.unobserve(h2);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    headings.forEach(h => observer.observe(h));
+  }
+
+  // ============================================
+  // CTA FINAL REVEAL ON SCROLL
+  // ============================================
+  function initCTAReveal() {
+    const ctaSection = document.querySelector('.cta-final');
+    if (!ctaSection) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const h2 = ctaSection.querySelector('h2');
+          const p = ctaSection.querySelector('p');
+          const btn = ctaSection.querySelector('.btn');
+
+          if (h2) {
+            h2.style.animation = 'slideDown 0.8s ease-out both';
+            h2.style.animationDelay = '0s';
+          }
+          if (p) {
+            p.style.animation = 'slideDown 0.8s ease-out 0.2s both';
+          }
+          if (btn) {
+            btn.style.animation = 'slideDown 0.8s ease-out 0.4s both';
+          }
+
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    observer.observe(ctaSection);
   }
 
   // ============================================
@@ -392,6 +573,30 @@
   }
 
   // ============================================
+  // SCROLL-DRIVEN PARALLAX FOR SECTIONS
+  // ============================================
+  function initScrollParallax() {
+    if (window.innerWidth < 768) return;
+
+    const parallaxElements = document.querySelectorAll('.gym-showcase, .loc-map');
+    
+    window.addEventListener('scroll', () => {
+      requestAnimationFrame(() => {
+        parallaxElements.forEach(el => {
+          const rect = el.getBoundingClientRect();
+          const vh = window.innerHeight;
+          
+          if (rect.top < vh && rect.bottom > 0) {
+            const scrollPercent = rect.top / vh;
+            const yOffset = scrollPercent * 40;
+            el.style.setProperty('--scroll-y', yOffset.toFixed(1) + 'px');
+          }
+        });
+      });
+    }, { passive: true });
+  }
+
+  // ============================================
   // INITIALIZATION
   // ============================================
   function init() {
@@ -413,8 +618,17 @@
     initModBackgroundParallax();
     initCardSpotlight();
     initHeroParticles();
+    // Novas animações
+    initCardTilt();
+    initRoscaDireta3D();
+    initMagneticButtons();
+    initGymParallax();
+    initStaggeredHeadings();
+    initCTAReveal();
+    initScrollParallax();
 
     console.log('✓ Landing page initialized successfully');
+    console.log('✓ Animações avançadas carregadas');
   }
 
   // ============================================

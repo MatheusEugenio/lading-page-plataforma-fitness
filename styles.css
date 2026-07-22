@@ -284,7 +284,7 @@ img {
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 10px 20px;
+  padding: 10px 12px;
   border-radius: var(--radius);
   border: 1px solid transparent;
   cursor: pointer;
@@ -340,6 +340,23 @@ img {
 
 .btn:active {
   transform: translateY(0);
+}
+
+/* Ripple effect para botões */
+.btn .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  transform: scale(0);
+  animation: ripple 0.6s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
 }
 
 .btn-primary {
@@ -970,6 +987,8 @@ section:not(.hero):not(.cta-final)::after {
               box-shadow var(--dur-fast) var(--ease-out),
               background var(--dur-fast) var(--ease-out);
   backdrop-filter: blur(6px);
+  transform-style: preserve-3d;
+  perspective: 800px;
 }
 
 /* brilho radial que segue posição relativa no hover (spotlight) */
@@ -1197,15 +1216,27 @@ section:not(.hero):not(.cta-final)::after {
   filter: none;
   animation: modPersonFloat 6s ease-in-out infinite alternate;
   pointer-events: none;
+  /* Transform 3D para efeito de rotação sutil */
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+
+/* Sombra suave na base da imagem do atleta para suavizar o corte */
+#modalidades .mod-container {
+  position: relative;
+  z-index: 25;
 }
 
 #modalidades::after {
   content: "";
   position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none ;
-  background: transparent;
+  bottom: 0;
+  right: 0;
+  width: 72%;
+  height: 185px;
+  z-index: 20 !important;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--void));
 }
 
 @keyframes modPersonFloat {
@@ -1369,6 +1400,8 @@ section:not(.hero):not(.cta-final)::after {
               box-shadow var(--dur-med) var(--ease-out), background var(--dur-fast) var(--ease-out);
   display: flex;
   flex-direction: column;
+  transform-style: preserve-3d;
+  perspective: 800px;
 }
 
 .plan-card::before {
@@ -1773,6 +1806,138 @@ section:not(.hero):not(.cta-final)::after {
 }
 
 /* ============================================ */
+/* ANIMAÇÕES AVANÇADAS ADICIONADAS */
+/* ============================================ */
+
+/* ---- Magnetic Button Effect (magnetic hover para botões) ---- */
+.btn.magnetic-hover {
+  transition: transform 0.25s var(--ease-spring);
+}
+
+/* ---- Tilt 3D para cards (ativo via JS) ---- */
+.diff-card.tilt-active,
+.plan-card.tilt-active {
+  transform-style: preserve-3d;
+}
+
+/* ---- Scroll-driven shimmer na logo do footer ---- */
+.footer-top .logo img {
+  transition: filter 0.4s ease, transform 0.4s ease;
+}
+.footer-top .logo:hover img {
+  filter: brightness(1.1) drop-shadow(0 0 8px rgba(255,193,7,0.3));
+  transform: scale(1.05);
+}
+
+/* ---- Parallax suave para imagens de seção ---- */
+.parallax-img {
+  will-change: transform;
+}
+
+/* ---- Typing cursor para o hero h1 (opcional via JS) ---- */
+.typing-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 0.8em;
+  background: var(--yellow);
+  margin-left: 4px;
+  animation: blink 0.8s ease-in-out infinite;
+  vertical-align: text-bottom;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ---- Reveal stagger com delay progressivo para seções ---- */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+
+.reveal-stagger.in > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Glow line decorativo que aparece com scroll ---- */
+.glow-line {
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--yellow), transparent);
+  margin: 0 auto;
+  transition: width 1s var(--ease-out);
+}
+
+.glow-line.visible {
+  width: 120px;
+}
+
+/* ---- Floating animation sutil para elementos de destaque ---- */
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.floating {
+  animation: floatGentle 4s ease-in-out infinite;
+}
+
+/* ---- Text split reveal para títulos de seção ---- */
+.split-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+}
+
+.split-char.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Section transition overlay ---- */
+.section-transition {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--yellow), transparent);
+  opacity: 0;
+  transform: scaleX(0);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.section-transition.visible {
+  opacity: 0.5;
+  transform: scaleX(1);
+}
+
+/* ---- Enhanced hover para gym-showcase com parallax interno ---- */
+.gym-showcase.parallax-ready .gym-img {
+  transition: transform 0.3s ease-out, filter 0.5s ease;
+}
+
+/* ---- Stagger para features list ---- */
+.mod-features li {
+  opacity: 0;
+  transform: translateX(-12px);
+  transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+}
+
+.mod-item.active .mod-features li {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.mod-item.active .mod-features li:nth-child(1) { transition-delay: 0.1s; }
+.mod-item.active .mod-features li:nth-child(2) { transition-delay: 0.2s; }
+.mod-item.active .mod-features li:nth-child(3) { transition-delay: 0.3s; }
+
+/* ============================================ */
 /* RESPONSIVE */
 /* ============================================ */
 @media (max-width: 768px) {
@@ -1829,6 +1994,12 @@ section:not(.hero):not(.cta-final)::after {
   .wa-float svg {
     width: 22px;
     height: 22px;
+  }
+
+  /* Desativar tilt 3D em mobile */
+  .diff-card.tilt-active,
+  .plan-card.tilt-active {
+    transform: none !important;
   }
 }
 
