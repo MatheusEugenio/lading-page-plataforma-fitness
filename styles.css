@@ -284,7 +284,7 @@ img {
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 10px 20px;
+  padding: 10px 12px;
   border-radius: var(--radius);
   border: 1px solid transparent;
   cursor: pointer;
@@ -1221,13 +1221,22 @@ section:not(.hero):not(.cta-final)::after {
   transition: transform 0.3s ease;
 }
 
+/* Sombra suave na base da imagem do atleta para suavizar o corte */
+#modalidades .mod-container {
+  position: relative;
+  z-index: 25;
+}
+
 #modalidades::after {
   content: "";
   position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none ;
-  background: transparent;
+  bottom: 0;
+  right: 0;
+  width: 72%;
+  height: 185px;
+  z-index: 20 !important;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--void));
 }
 
 @keyframes modPersonFloat {
