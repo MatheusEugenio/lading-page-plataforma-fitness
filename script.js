@@ -429,11 +429,13 @@
           h2.innerHTML = '';
           
           // Split text into words
-          const words = text.split(' ');
+          const words = text.split(/\s+/);
           words.forEach((word, i) => {
             const span = document.createElement('span');
-            span.textContent = word + ' ';
             span.style.display = 'inline-block';
+            span.style.whiteSpace = 'nowrap';
+            span.textContent = word;
+            span.style.marginRight = '0.25em';  // espaço fixo via margin em cada palavra
             span.style.opacity = '0';
             span.style.transform = 'translateY(16px)';
             span.style.transition = `opacity 0.4s var(--ease-out) ${i * 0.06}s, transform 0.4s var(--ease-out) ${i * 0.06}s`;
