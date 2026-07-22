@@ -46,6 +46,8 @@ Para publicar, envie os arquivos para seu serviço de hospedagem (Netlify, Verce
 | Horário & Segurança | `#horario` | Horário de funcionamento e informações de segurança |
 | Planos | `#planos` | Planos mensal, trimestral e semestral |
 | Localização | `#local` | Endereço, mapa incorporado e botão de rota até a academia |
+| Final | `#final` | Página de conversão, 
+chama o cliente a contatar e frequentar a academia|
 
 ---
 
@@ -68,9 +70,6 @@ Para publicar, envie os arquivos para seu serviço de hospedagem (Netlify, Verce
 
 - **Botão "Como chegar"**
   - Abre o Google Maps já traçando a rota de carro até a academia.
-
-- **CTA Flutuante do WhatsApp**
-  - Sempre visível, com mensagem pré-preenchida.
 
 ---
 
