@@ -12,8 +12,11 @@
   function initScrollTracking() {
     const topProgress = document.getElementById('topProgress');
     const railFill = document.getElementById('railFill');
+    const header = document.querySelector('.header');
     const sections = ['#hero', '#estrutura', '#modalidades', '#planos', '#local'].map(id => document.querySelector(id));
     const navButtons = Array.from(document.querySelectorAll('#levelNav button'));
+
+    let ticking = false;
 
     function updateScroll() {
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -21,6 +24,10 @@
       
       topProgress.style.width = scrolled + '%';
       railFill.style.height = scrolled + '%';
+
+      if (header) {
+        header.classList.toggle('scrolled', window.scrollY > 40);
+      }
 
       // Update active nav button
       let activeIndex = 0;
@@ -34,9 +41,19 @@
         btn.classList.toggle('active', i === activeIndex);
         btn.setAttribute('aria-selected', i === activeIndex);
       });
+
+      ticking = false;
     }
 
-    window.addEventListener('scroll', updateScroll, { passive: true });
+    // requestAnimationFrame evita reflow constante em scroll rápido
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(updateScroll);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
     updateScroll();
   }
 
@@ -172,10 +189,17 @@
     const heroGlow = document.querySelector('.hero-glow');
     
     if (heroGrid && heroGlow) {
+      let ticking = false;
       window.addEventListener('scroll', () => {
-        const scrollY = window.scrollY;
-        heroGrid.style.transform = `translateY(${scrollY * 0.5}px)`;
-        heroGlow.style.transform = `translateY(${scrollY * 0.3}px)`;
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            const scrollY = window.scrollY;
+            heroGrid.style.transform = `translateY(${scrollY * 0.5}px)`;
+            heroGlow.style.transform = `translateY(${scrollY * 0.3}px)`;
+            ticking = false;
+          });
+          ticking = true;
+        }
       }, { passive: true });
     }
   }
@@ -239,6 +263,51 @@
         // Note: Add CSS animation for ripple if desired
       });
     });
+  }
+
+  // ============================================
+  // CARD SPOTLIGHT (segue o cursor via CSS vars --mx/--my)
+  // ============================================
+  function initCardSpotlight() {
+    const cards = document.querySelectorAll('.diff-card, .plan-card');
+    if (!cards.length) return;
+
+    cards.forEach(card => {
+      card.addEventListener('pointermove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty('--mx', x + '%');
+        card.style.setProperty('--my', y + '%');
+      }, { passive: true });
+    });
+  }
+
+  // ============================================
+  // HERO PARTICLES (partículas discretas geradas via JS)
+  // ============================================
+  function initHeroParticles() {
+    const hero = document.querySelector('.hero');
+    if (!hero || window.innerWidth < 700) return;
+
+    const layer = document.createElement('div');
+    layer.className = 'hero-particles';
+    layer.setAttribute('aria-hidden', 'true');
+    hero.appendChild(layer);
+
+    const count = 16;
+    for (let i = 0; i < count; i++) {
+      const p = document.createElement('span');
+      const left = Math.random() * 100;
+      const delay = Math.random() * 14;
+      const duration = 10 + Math.random() * 10;
+      const drift = (Math.random() * 60 - 30).toFixed(0) + 'px';
+      p.style.left = left + '%';
+      p.style.animationDelay = delay + 's';
+      p.style.animationDuration = duration + 's';
+      p.style.setProperty('--drift', drift);
+      layer.appendChild(p);
+    }
   }
 
   // ============================================
@@ -342,6 +411,8 @@
     initTracking();
     initModBackgroundFade();
     initModBackgroundParallax();
+    initCardSpotlight();
+    initHeroParticles();
 
     console.log('✓ Landing page initialized successfully');
   }
