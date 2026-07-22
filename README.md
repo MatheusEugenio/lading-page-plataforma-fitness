@@ -14,9 +14,10 @@ Landing page institucional da **Plataforma Fitness**, academia localizada em Ipu
 ├── styles.css              # Estilos, tema visual e animações
 ├── script.js               # Interações, scroll tracking e efeitos
 ├── images/                 # Imagens de fundo
-│   ├── halters-simples.jpg
-│   ├── imagem-hack-amplo.png
-│   └── rosca-direta.jpg
+│   ├── costas-amplo3.png
+│   ├── hero-gym.jpg
+│   ├── logo.png
+│   └── rosca-direta-Photoroom.png
 └── README.md               # Este arquivo
 ```
 
@@ -117,5 +118,6 @@ Qualquer novo `git push` para a branch conectada gera um deploy automático.
 - ✅ Microsoft Edge
 - ✅ Mozilla Firefox
 - ✅ Safari
+- ✅ Mobile
 
 Sem utilização de bibliotecas externas. Projeto desenvolvido utilizando apenas **HTML, CSS e JavaScript nativos**.
