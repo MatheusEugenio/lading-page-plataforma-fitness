@@ -46,8 +46,7 @@ Para publicar, envie os arquivos para seu serviço de hospedagem (Netlify, Verce
 | Horário & Segurança | `#horario` | Horário de funcionamento e informações de segurança |
 | Planos | `#planos` | Planos mensal, trimestral e semestral |
 | Localização | `#local` | Endereço, mapa incorporado e botão de rota até a academia |
-| Final | `#final` | Página de conversão, 
-chama o cliente a contatar e frequentar a academia|
+| Final | `#final` | Página de conversão, chama o cliente a contatar e frequentar a academia|
 
 ---
 
