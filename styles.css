@@ -227,7 +227,7 @@ img {
   align-items: center;
   gap: 36px;
   font-family: "JetBrains Mono", monospace;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.07em;
   text-transform: uppercase;
   margin-left: 150px;
@@ -281,13 +281,12 @@ img {
   align-items: center;
   gap: 12px;
   font-family: "JetBrains Mono", monospace;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 8px 7px;
   border-radius: var(--radius);
   border: 1px solid transparent;
-  cursor: pointer;
   transition: transform var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out),
               border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
   position: relative;
@@ -539,7 +538,7 @@ img {
           rgba(16,17,20,.68) 70%,
           rgba(16,17,20,.88) 100%
       ),
-      url("images/hero-gym.jpg");
+      url("images/hack-amplo.png");
 
   background-size: cover;
   background-position: center right;
@@ -553,18 +552,18 @@ img {
 
     background:
         linear-gradient(
-            rgba(16,17,20,.80),
-            rgba(16,17,20,.80)
+            rgba(16,17,20,.74),
+            rgba(16,17,20,.76)
         ),
-        url("images/hero-gym.jpg");
+        url("images/hack-amplo.png");
 
     background-size: cover;
-    background-position: center;
+    background-position: right;
 
-    filter: blur(0.5px) contrast(1.2) saturate(0.90);
+    filter: blur(0.4px) contrast(1.2) saturate(0.90);
 
     transform: scale(1.10);
-    animation: heroImgBreathe 18s ease-in-out infinite alternate;
+    animation: heroImgBreathe 16s ease-in-out infinite alternate;
 
     z-index: 0;
 }
