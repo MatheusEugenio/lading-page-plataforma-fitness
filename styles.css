@@ -24,8 +24,8 @@
 
   --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.25);
   --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.45);
-  --shadow-glow: 0 0 0 1px rgba(255, 193, 7, 0.12), 0 20px 50px -10px rgba(255, 193, 7, 0.18);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.33);
+  --shadow-glow: 0 0 0 1px rgba(255, 193, 7, 0.11), 0 20px 50px -10px rgba(255, 193, 7, 0.18);
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
@@ -934,7 +934,7 @@ section:not(.hero):not(.cta-final)::after {
 
 .gym-showcase:hover .gym-img {
   transform: scale(1.06);
-  filter: brightness(0.82) contrast(1.15);
+  filter: brightness(0.82) contrast(1.01);
 }
 
 .gym-overlay {
