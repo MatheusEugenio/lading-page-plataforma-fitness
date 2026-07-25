@@ -575,6 +575,33 @@
   }
 
   // ============================================
+  // CARROSSEL DE AVALIAÇÕES (pausa em interação touch)
+  // ============================================
+  function initReviewsCarousel() {
+    const carousel = document.getElementById('reviewsCarousel');
+    if (!carousel) return;
+
+    let resumeTimeout;
+
+    function pause() {
+      clearTimeout(resumeTimeout);
+      carousel.classList.add('is-touching');
+    }
+
+    function scheduleResume() {
+      clearTimeout(resumeTimeout);
+      resumeTimeout = setTimeout(() => {
+        carousel.classList.remove('is-touching');
+      }, 500);
+    }
+
+    carousel.addEventListener('touchstart', pause, { passive: true });
+    carousel.addEventListener('touchmove', pause, { passive: true });
+    carousel.addEventListener('touchend', scheduleResume, { passive: true });
+    carousel.addEventListener('touchcancel', scheduleResume, { passive: true });
+  }
+
+  // ============================================
   // SCROLL-DRIVEN PARALLAX FOR SECTIONS
   // ============================================
   function initScrollParallax() {
@@ -628,6 +655,7 @@
     initStaggeredHeadings();
     initCTAReveal();
     initScrollParallax();
+    initReviewsCarousel();
 
     console.log('✓ Landing page initialized successfully');
     console.log('✓ Animações avançadas carregadas');
