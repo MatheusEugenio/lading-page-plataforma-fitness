@@ -22,17 +22,14 @@
   --glass-border: rgba(255, 255, 255, 0.09);
   --glass-border-hover: rgba(255, 193, 7, 0.35);
 
-  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.25);
   --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.35);
   --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.33);
   --shadow-glow: 0 0 0 1px rgba(255, 193, 7, 0.11), 0 20px 50px -10px rgba(255, 193, 7, 0.18);
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --dur-fast: 0.25s;
   --dur-med: 0.55s;
-  --dur-slow: 0.9s;
 }
 
 /* ============================================ */
@@ -212,16 +209,6 @@ img {
   margin-left: 5px;
 }
 
-.logo .dot {
-  color: var(--yellow);
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
-}
-
 .nav-links {
   display: flex;
   align-items: center;
@@ -384,23 +371,6 @@ img {
 .btn-primary:hover {
   background: var(--amber);
   box-shadow: 0 8px 28px rgba(255, 193, 7, 0.32);
-}
-
-.btn-ghost {
-  background: transparent;
-  border: 1px solid var(--glass-border);
-  color: var(--paper-dim);
-}
-
-.btn-ghost:hover {
-  border-color: var(--yellow);
-  color: var(--yellow);
-  background: rgba(255, 193, 7, 0.06);
-}
-
-.btn-sm {
-  padding: 10px 16px;
-  font-size: 11px;
 }
 
 .btn-lg {
@@ -1127,17 +1097,6 @@ section:not(.hero):not(.cta-final)::after {
   }
 }
 
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-}
-
 .mod-item h3 {
   font-size: 28px;
   margin-bottom: 16px;
@@ -1262,16 +1221,6 @@ section:not(.hero):not(.cta-final)::after {
 /* Efeito de escurecimento removido para manter a cor original */
 #modalidades.bg-in::before {
   filter: none;
-}
-
-@keyframes modBgPan {      /* zoom + leve rotação na foto, bem devagar (24s) */ 
- 0%   { transform: scale(1.1)  rotate(0deg)    translate(0, 0); }
-  50%  { transform: scale(1.16) rotate(0.4deg)  translate(-1.2%, -0.8%); }
-  100% { transform: scale(1.22) rotate(-0.3deg) translate(-2.4%, -1.6%); }
-}
-@keyframes modShadowWalk { /* a faixa preta atravessando a imagem em loop (8s) */ 
-  0%   { background-position: -80% -40%, center, center; }
-  100% { background-position: 180% 140%, center, center; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1774,58 +1723,6 @@ section:not(.hero):not(.cta-final)::after {
 }
 
 /* ============================================ */
-/* WHATSAPP FLOATING BUTTON */
-/* ============================================ */
-.wa-float {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 70;
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  background: var(--yellow);
-  color: var(--void);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  box-shadow: 0 8px 24px rgba(255, 193, 7, 0.35);
-  transition: transform 0.2s var(--ease-spring), box-shadow 0.2s ease;
-  animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), waPulse 4s ease-in-out 1s infinite;
-}
-
-@keyframes waPulse {
-  0%, 100% { box-shadow: 0 8px 24px rgba(255, 193, 7, 0.35); }
-  50%      { box-shadow: 0 8px 30px rgba(255, 193, 7, 0.55), 0 0 0 8px rgba(255,193,7,0.08); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .wa-float { animation: none; }
-}
-
-@keyframes popIn {
-  0% {
-    transform: scale(0);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-.wa-float:hover {
-  transform: scale(1.1);
-  box-shadow: 0 12px 32px rgba(255, 193, 7, 0.45);
-}
-
-.wa-float svg {
-  width: 26px;
-  height: 26px;
-}
-
-/* ============================================ */
 /* ANIMAÇÕES AVANÇADAS ADICIONADAS */
 /* ============================================ */
 
@@ -1844,27 +1741,6 @@ section:not(.hero):not(.cta-final)::after {
   transform: scale(1.05);
 }
 
-/* ---- Parallax suave para imagens de seção ---- */
-.parallax-img {
-  will-change: transform;
-}
-
-/* ---- Typing cursor para o hero h1 (opcional via JS) ---- */
-.typing-cursor {
-  display: inline-block;
-  width: 3px;
-  height: 0.8em;
-  background: var(--yellow);
-  margin-left: 4px;
-  animation: blink 0.8s ease-in-out infinite;
-  vertical-align: text-bottom;
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
 /* ---- Reveal stagger com delay progressivo para seções ---- */
 .reveal-stagger > * {
   opacity: 0;
@@ -1875,60 +1751,6 @@ section:not(.hero):not(.cta-final)::after {
 .reveal-stagger.in > * {
   opacity: 1;
   transform: translateY(0);
-}
-
-/* ---- Glow line decorativo que aparece com scroll ---- */
-.glow-line {
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--yellow), transparent);
-  margin: 0 auto;
-  transition: width 1s var(--ease-out);
-}
-
-.glow-line.visible {
-  width: 120px;
-}
-
-/* ---- Floating animation sutil para elementos de destaque ---- */
-@keyframes floatGentle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-.floating {
-  animation: floatGentle 4s ease-in-out infinite;
-}
-
-/* ---- Text split reveal para títulos de seção ---- */
-.split-char {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
-}
-
-.split-char.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ---- Section transition overlay ---- */
-.section-transition {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--yellow), transparent);
-  opacity: 0;
-  transform: scaleX(0);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.section-transition.visible {
-  opacity: 0.5;
-  transform: scaleX(1);
 }
 
 /* ---- Enhanced hover para gym-showcase com parallax interno ---- */
