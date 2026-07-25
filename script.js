@@ -145,25 +145,6 @@
     bgObserver.observe(modSection);
   }
 
-  // ============================================
-  // MODALIDADES BACKGROUND PARALLAX
-  // ============================================
-  function initModBackgroundParallax() {
-    const modSection = document.getElementById('modalidades');
-    if (!modSection) return;
-
-    function updateParallax() {
-      const rect = modSection.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const center = rect.top + rect.height / 2;
-      const progress = (center - vh / 2) / (vh / 2 + rect.height / 2);
-      const shift = progress * 60;
-      modSection.style.setProperty('--mod-parallax-y', shift.toFixed(1) + 'px');
-    }
-
-    window.addEventListener('scroll', updateParallax, { passive: true });
-    updateParallax();
-  }
 
   // ============================================
   // SMOOTH SCROLL FOR ANCHOR LINKS
@@ -352,9 +333,6 @@
       
       const rotateX = y * 5; // máximo 5 graus
       const rotateY = x * -5;
-      
-      pseudo.style.setProperty('--rosca-rotate-x', rotateX.toFixed(2) + 'deg');
-      pseudo.style.setProperty('--rosca-rotate-y', rotateY.toFixed(2) + 'deg');
       
       // Aplicar via CSS custom property para o ::before
       modSection.style.setProperty('--mouse-x', ((e.clientX - rect.left) / rect.width * 100) + '%');
@@ -575,30 +553,6 @@
   }
 
   // ============================================
-  // SCROLL-DRIVEN PARALLAX FOR SECTIONS
-  // ============================================
-  function initScrollParallax() {
-    if (window.innerWidth < 768) return;
-
-    const parallaxElements = document.querySelectorAll('.gym-showcase, .loc-map');
-    
-    window.addEventListener('scroll', () => {
-      requestAnimationFrame(() => {
-        parallaxElements.forEach(el => {
-          const rect = el.getBoundingClientRect();
-          const vh = window.innerHeight;
-          
-          if (rect.top < vh && rect.bottom > 0) {
-            const scrollPercent = rect.top / vh;
-            const yOffset = scrollPercent * 40;
-            el.style.setProperty('--scroll-y', yOffset.toFixed(1) + 'px');
-          }
-        });
-      });
-    }, { passive: true });
-  }
-
-  // ============================================
   // INITIALIZATION
   // ============================================
   function init() {
@@ -612,12 +566,10 @@
     initHeroAnimations();
     initButtonRipple();
     initMobileMenu();
-    initLazyLoad();
     initFormInteractions();
     initKeyboardNav();
     initTracking();
     initModBackgroundFade();
-    initModBackgroundParallax();
     initCardSpotlight();
     initHeroParticles();
     // Novas animações
@@ -627,7 +579,6 @@
     initGymParallax();
     initStaggeredHeadings();
     initCTAReveal();
-    initScrollParallax();
 
     console.log('✓ Landing page initialized successfully');
     console.log('✓ Animações avançadas carregadas');
