@@ -1829,11 +1829,6 @@ section:not(.hero):not(.cta-final)::after {
 /* ANIMAÇÕES AVANÇADAS ADICIONADAS */
 /* ============================================ */
 
-/* ---- Magnetic Button Effect (magnetic hover para botões) ---- */
-.btn.magnetic-hover {
-  transition: transform 0.25s var(--ease-spring);
-}
-
 /* ---- Tilt 3D para cards (ativo via JS) ---- */
 .diff-card.tilt-active,
 .plan-card.tilt-active {
