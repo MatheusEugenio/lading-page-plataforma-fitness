@@ -346,31 +346,6 @@
   }
 
   // ============================================
-  // MAGNETIC BUTTON EFFECT
-  // ============================================
-  function initMagneticButtons() {
-    if (window.innerWidth < 768) return;
-
-    const buttons = document.querySelectorAll('.btn');
-    buttons.forEach(btn => {
-      btn.classList.add('magnetic-hover');
-      
-      btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        
-        const strength = 0.3;
-        btn.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
-      });
-
-      btn.addEventListener('mouseleave', () => {
-        btn.style.transform = '';
-      });
-    });
-  }
-
-  // ============================================
   // GYM SHOWCASE PARALLAX ON SCROLL
   // ============================================
   function initGymParallax() {
@@ -602,7 +577,6 @@
     // Novas animações
     initCardTilt();
     initRoscaDireta3D();
-    initMagneticButtons();
     initGymParallax();
     initStaggeredHeadings();
     initCTAReveal();
